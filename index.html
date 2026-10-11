@@ -42,7 +42,9 @@
     .tab-btn.active { background: var(--primary-dark); color: #fff; }
     .img-upload-box { background: #f4faf8; border: 1px dashed var(--mint-green); padding: 8px; border-radius: 6px; margin-top: 8px; font-size: 0.8rem; }
     .img-preview { max-width: 60px; max-height: 40px; display: block; margin-top: 4px; border: 1px solid #ccc; }
-
+    .custom-row input[type="text"] {
+  max-width: 200px; /* ปรับลดความกว้างช่องชื่อบริการตามต้องการได้เลยครับ */
+}
     #receipt-print-area { display: none; }
     @media print {
       body * { visibility: hidden; }
@@ -118,8 +120,8 @@
       </div>
 
       <div class="custom-row" style="margin-top: 8px;">
-        <input type="text" id="cust-name" placeholder="บริการอื่นๆ (ระบุชื่อ)">
-        <input type="number" id="cust-price" placeholder="ราคา (บาท)" style="max-width: 100px;">
+        <input type="text" id="cust-name" placeholder="บริการอื่นๆ (ระบุชื่อ)" style="flex: 2;">
+        <input type="number" id="cust-price" placeholder="ราคา (บาท)" style="max-width: 80px;">
         <button type="button" class="btn-service" id="add-cust" style="white-space: nowrap;">+ เพิ่มรายการ</button>
       </div>
     </div>
