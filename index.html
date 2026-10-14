@@ -48,6 +48,8 @@
 <body class="bg-emerald-50/50 text-slate-800 antialiased min-h-screen flex flex-col pb-24 md:pb-0">
 
     <script>
+        // วาง URL ที่ได้จากขั้นตอน Deploy ใน Google Apps Script (ลงท้ายด้วย /exec)
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby_mrTnDPc78WQbl7f-3oPNGD7FohzIcNBuZX0yTwFjOnKQ_-ZOm6I2um1-v80TJ6R2/exec";
         const APP_LOGO_SRC = ""; 
         const RECEIPT_LOGO_SRC = ""; 
         const QR_PAYMENT_SRC = ""; 
@@ -354,6 +356,47 @@
             populateBagSelect();
             renderProducts('all');
             updateCartUI();
+
+        // ฟังก์ชันดึงประวัติล่าสุดจาก Google Sheets มาแสดง
+        function fetchHistoryFromSheets() {
+            if (typeof GOOGLE_SCRIPT_URL === 'undefined' || GOOGLE_SCRIPT_URL.trim() === "") return;
+
+            fetch(GOOGLE_SCRIPT_URL)
+                .then(response => response.json())
+                .then(data => {
+                    if (Array.isArray(data) && data.length > 0) {
+                        salesHistory = data.map(item => ({
+                            id: item.BillID,
+                            timestamp: item.Timestamp,
+                            datetimeFormatted: item.Timestamp,
+                            staff: item.Staff,
+                            bags: item.Bags,
+                            pieces: item.Pieces,
+                            items: [], 
+                            total: parseFloat(item.Total) || 0
+                        })).reverse();
+
+                        localStorage.setItem('rinsoo_sales', JSON.stringify(salesHistory));
+                        updateHistoryUI();
+                    }
+                })
+                .catch(err => console.error("Error fetching from Google Sheets:", err));
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            initLogoAndQR();
+            populateBagSelect();
+            renderProducts('all');
+            updateCartUI();
+            
+            const todayStr = new Date().toISOString().split('T')[0];
+            document.getElementById('history-date-filter').value = todayStr;
+
+            updateHistoryUI();
+            
+            // เพิ่มบรรทัดนี้ เพื่อให้มันดึงข้อมูลจาก Google Sheets ทันทีที่เปิดเว็บ
+            fetchHistoryFromSheets();
+        });
             
             // ตั้งค่าเริ่มต้นของปฏิทินให้เป็นวันปัจจุบัน (YYYY-MM-DD)
             const todayStr = new Date().toISOString().split('T')[0];
@@ -618,9 +661,21 @@ document.getElementById('print-logo-box-copy').innerHTML = `<img src="data:image
                 totalQty: totalQty
             };
 
+            // 1. บันทึกลง LocalStorage เครื่องตัวเองชั่วคราว
             salesHistory.unshift(transaction);
             localStorage.setItem('rinsoo_sales', JSON.stringify(salesHistory));
 
+            // 2. ส่งข้อมูลไปยัง Google Sheets (คลาวด์) แบบเบื้องหลัง
+            if (typeof GOOGLE_SCRIPT_URL !== 'undefined' && GOOGLE_SCRIPT_URL.trim() !== "") {
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(transaction)
+                }).catch(err => console.error("Error sending to Google Sheets:", err));
+            }
+
+            // 3. สั่งพิมพ์ใบเสร็จและรีเซ็ตหน้าจอ
             window.print();
 
             cart = [];
@@ -629,6 +684,7 @@ document.getElementById('print-logo-box-copy').innerHTML = `<img src="data:image
             closeReceiptModal();
             updateHistoryUI();
         }
+
 
         // ฟังก์ชันเปิดดูรายละเอียดบิลย้อนหลัง
         function viewHistoryDetail(tx) {
