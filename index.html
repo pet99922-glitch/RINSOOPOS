@@ -782,7 +782,7 @@ function buildESCPOSReceipt(data) {
                                 parsedItems = typeof rawItems === 'string' ? JSON.parse(rawItems) : (rawItems || []);
                             } catch(e) { parsedItems = []; }
 
-                            const bId = item.Billid || item.BillId || item.BillID || item.billid || item.BILLID || item.id || Object.values(item)[0] || '';
+                            const bId = item.billId || item.BillID || item.Billid || item.billid || item.BILLID || Object.values(item)[0] || '';
                             
                             const subVal = parseFloat(item.Subtotal !== undefined ? item.Subtotal : item.subtotal) || 0;
                             const discVal = parseFloat(item.Discount !== undefined ? item.Discount : item.discount) || 0;
@@ -1105,9 +1105,8 @@ function buildESCPOSReceipt(data) {
                 printArea.className = 'paper-58';
             }
 
-            const bId = data.id || data.billid || data.billId || data.BillID || data.rawBillId || '-';
-            document.getElementById('print-bill-id').innerText = data.Billid || '-';
-            document.getElementById('print-bill-id-copy').innerText = data.Billid || '-';
+            document.getElementById('print-bill-id').innerText = data.id || data.billId || '-';
+            document.getElementById('print-bill-id-copy').innerText = data.id || data.billId || '-';
             
             const metaHtml = `พนักงาน: ${data.staff || '-'} | ผ้า: ${data.bags || 1} ตะกร้า (${data.pieces || 0} ชิ้น)<br>เวลา: ${data.datetimeFormatted || '-'}`;
             document.getElementById('print-meta').innerHTML = metaHtml;
