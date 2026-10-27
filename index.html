@@ -1065,7 +1065,7 @@
 
             let logoHtml = '';
             if (typeof RECEIPT_LOGO_SRC !== 'undefined' && RECEIPT_LOGO_SRC && RECEIPT_LOGO_SRC !== "ใส่B64") {
-                logoHtml = `<div class="flex justify-center mb-1"><img src="${RECEIPT_LOGO_SRC}" style="width: 60px; height: 60px; object-fit: contain;" alt="Logo"></div>`;
+                logoHtml = `<div class="flex justify-center mb-1"><img src="${RECEIPT_LOGO_SRC}" style="width: 80px; height: 80px; object-fit: contain;" alt="Logo"></div>`;
             }
 
             const dynamicQRHtml = getDynamicQRCode(total);
@@ -1124,7 +1124,7 @@
 
             let logoPrintHtml = '';
             if (typeof RECEIPT_LOGO_SRC !== 'undefined' && RECEIPT_LOGO_SRC && RECEIPT_LOGO_SRC !== "ใส่B64") {
-                logoPrintHtml = `<img src="${RECEIPT_LOGO_SRC}" style="width: 60px; height: 60px; object-fit: contain; margin: 0 auto; display: block;" alt="Logo">`;
+                logoPrintHtml = `<img src="${RECEIPT_LOGO_SRC}" style="width: 100px; height: 100px; object-fit: contain; margin: 0 auto; display: block;" alt="Logo">`;
             }
             document.getElementById('print-logo-box').innerHTML = logoPrintHtml;
             document.getElementById('print-logo-box-copy').innerHTML = logoPrintHtml;
