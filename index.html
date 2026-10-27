@@ -537,12 +537,12 @@
             <div style="display: flex; justify-content: space-between;"><span>จำนวนผ้า:</span> <span id="print-bags">-</span></div>
         </div>
 
-        <div style="font-size: 9px; font-weight: bold; color: #666; margin-bottom: 2px;">รายการสินค้า / บริการ</div>
+        <div style="font-size: 9px; font-weight: bold; color: #000; margin-bottom: 2px;">รายการสินค้า / บริการ</div>
         <div id="print-items-container" style="margin-bottom: 4px;"></div>
         
         <div style="border-top: 1px dashed #000; padding-top: 3px; font-size: 9px;">
             <div style="display: flex; justify-content: space-between;"><span>ยอดรวมสินค้า</span><span id="print-subtotal">0 ฿</span></div>
-            <div id="print-discount-box" style="display: none; justify-content: space-between; color: #92400e;">
+            <div id="print-discount-box" style="display: none; justify-content: space-between; color: #000;">
                 <span>ส่วนลดโปรโมชัน:</span>
                 <span id="print-discount-val">-0 ฿</span>
             </div>
@@ -550,7 +550,7 @@
 
         <div style="border-top: 1px dashed #000; margin: 4px 0; padding-top: 3px; display: flex; justify-content: space-between; font-weight: bold; font-size: 11px;">
             <span>ยอดชำระสุทธิ</span>
-            <span id="print-total" style="color: #0f766e;">0 บาท</span>
+            <span id="print-total" style="color: #000;">0 บาท</span>
         </div>
 
         <div style="text-align: center; margin-top: 6px;" id="print-qr-box"></div>
@@ -570,12 +570,12 @@
             <div style="display: flex; justify-content: space-between;"><span>จำนวนผ้า:</span> <span id="print-bags-copy">-</span></div>
         </div>
 
-        <div style="font-size: 9px; font-weight: bold; color: #666; margin-bottom: 2px;">รายการสินค้า / บริการ</div>
+        <div style="font-size: 9px; font-weight: bold; color: #000; margin-bottom: 2px;">รายการสินค้า / บริการ</div>
         <div id="print-items-container-copy" style="margin-bottom: 4px;"></div>
         
         <div style="border-top: 1px dashed #000; padding-top: 3px; font-size: 9px;">
             <div style="display: flex; justify-content: space-between;"><span>ยอดรวมสินค้า</span><span id="print-subtotal-copy">0 ฿</span></div>
-            <div id="print-discount-box-copy" style="display: none; justify-content: space-between; color: #92400e;">
+            <div id="print-discount-box-copy" style="display: none; justify-content: space-between; color: #000;">
                 <span>ส่วนลดโปรโมชัน:</span>
                 <span id="print-discount-val-copy">-0 ฿</span>
             </div>
@@ -1150,7 +1150,7 @@
                 data.items.forEach(i => {
                     printItemsHtml += `
                         <div style="display: flex; justify-content: space-between; font-size: 9px; padding: 1px 0;">
-                            <span>${i.name} <span style="color: #555;">x${i.qty}</span></span>
+                            <span>${i.name} <span style="color: #000;">x${i.qty}</span></span>
                             <span style="font-weight: 600;">${((i.price || 0) * (i.qty || 1)).toLocaleString()} ฿</span>
                         </div>
                     `;
