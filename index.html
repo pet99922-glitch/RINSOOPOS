@@ -1106,8 +1106,9 @@ function buildESCPOSReceipt(data) {
                 printArea.className = 'paper-58';
             }
 
-            document.getElementById('print-bill-id').innerText = data.billId || '-';
-            document.getElementById('print-bill-id-copy').innerText = data.billId || '-';
+            const bId = data.id || data.billid || data.billId || data.BillID || data.rawBillId || '-';
+            document.getElementById('print-bill-id').innerText = data.Billid || '-';
+            document.getElementById('print-bill-id-copy').innerText = data.Billid || '-';
             
             const metaHtml = `พนักงาน: ${data.staff || '-'} | ผ้า: ${data.bags || 1} ตะกร้า (${data.pieces || 0} ชิ้น)<br>เวลา: ${data.datetimeFormatted || '-'}`;
             document.getElementById('print-meta').innerHTML = metaHtml;
